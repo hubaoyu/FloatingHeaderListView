@@ -128,6 +128,10 @@ public class FloatingHeaderListView extends LinearLayout implements OnTouchListe
 			yDown = event.getRawY();
 			break;
 		case MotionEvent.ACTION_MOVE:
+			if (yDown == -1) {
+				yDown = event.getRawY();
+				break;
+			}
 			float yMove = event.getRawY();
 			int distance = (int) (yMove - yDown);
 			yDown = yMove;
@@ -168,6 +172,7 @@ public class FloatingHeaderListView extends LinearLayout implements OnTouchListe
 			break;
 		case MotionEvent.ACTION_UP:
 		default:
+			yDown = -1;
 			if (currentStatus == STATUS_SHOW_HEADER) {
 				// 松手时如果是释放立即刷新状态，就去调用正在刷新的任务
 				new ShowHeaderTask().execute();
@@ -201,9 +206,13 @@ public class FloatingHeaderListView extends LinearLayout implements OnTouchListe
 					break;
 				}
 				publishProgress(topMargin);
-				sleep(1);
+				try {
+					Thread.sleep(1);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
-			publishProgress(0);
+			publishProgress(topMargin);
 			return null;
 		}
 
@@ -244,7 +253,11 @@ public class FloatingHeaderListView extends LinearLayout implements OnTouchListe
 					break;
 				}
 				publishProgress(topMargin);
-				sleep(1);
+				try {
+					Thread.sleep(1);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 			return topMargin;
 		}
@@ -264,17 +277,4 @@ public class FloatingHeaderListView extends LinearLayout implements OnTouchListe
 		}
 	}
 
-	/**
-	 * 使当前线程睡眠指定的毫秒数。
-	 * 
-	 * @param time
-	 *            指定当前线程睡眠多久，以毫秒为单位
-	 */
-	private void sleep(int time) {
-		try {
-			Thread.sleep(time);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-	}
 }

@@ -13,7 +13,7 @@ public class MainActivity extends Activity {
     FloatingHeaderListView refreshableView;
     ListView listView;
     ArrayAdapter<String> adapter;
-    String[] items = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "A", "B", "C", "D", "E", "F", "G", "H", "I"};
+    String[] items = { "pull down the list view.", "B", "C", "D", "E", "F", "G", "H", "I", "A", "B", "C", "D", "E", "F", "G", "H", "I"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
